@@ -26,7 +26,7 @@ SECRET_KEY = 'i6rm7vbqo%&6k28z5#o+0dqti9z@vug=@q_5g&x9s$p$1$)78_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['161.35.98.240', 'localhost']
 
 
 # Application definition
@@ -124,7 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
+STATIC_ROOT = os.path.join(BASE_DIR, 'leemon/static/')
 
 
 # Email

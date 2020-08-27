@@ -1,8 +1,8 @@
 from django.shortcuts import get_list_or_404, render
 from django.http import HttpResponse
 import json
-from .render import Render
-from leemon import save_txt, make_pdf
+from leemon import render_pdf
+from leemon import save_txt
 from leemon import mail
 
 from .models import Category, Product, Customers, Image, Purchases
@@ -103,8 +103,9 @@ def purchase(request):
 
         txt_path = save_txt.save(user.__dict__)
 
-        pdf_path =  Render.render_to_file('leemon/confirmation.html', details)
-        mail.send(user.email, purchase_id, pdf_path[1], txt_path)
+        pdf_path = render_pdf.render_to_file('leemon/confirmation.html',
+                                             details)
+        # mail.send(user.email, purchase_id, pdf_path[1], txt_path)
 
     # return HttpResponse(pdf_path)
     return render(request, 'leemon/confirmation.html', details)
