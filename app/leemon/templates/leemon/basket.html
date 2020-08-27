@@ -1,0 +1,13 @@
+{% extends 'leemon/base.html' %}
+
+{% block onload %}onload="render_basket()"{% endblock %}
+
+{% block body_block %}
+	<h1>Carrito de compras</h1>
+	<div id="basket">	
+	</div>
+	<a href="{% url 'leemon:new_user' %}">
+	<button type="button" class="btn btn-success">Continuar</button>
+	</a>
+{% endblock %}
+

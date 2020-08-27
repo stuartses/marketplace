@@ -1,0 +1,130 @@
+function add_product(id, state) {
+	if (state == 'add' ) {
+		products[id].amount = document.getElementById('amount-' + id).value;
+		products[id].total = document.getElementById('totalForm-' + id).value;
+	}
+
+	if (state == 'quit') {
+		products[id].amount = 0;
+		products[id].total = 0;
+	}
+
+	sessionStorage.basket = JSON.stringify(products);
+	console.log(products);
+}
+
+function calc_total(id, value, discount_id, obj) {
+	let cant = parseInt(obj.value);
+	if (isNaN(cant))
+		cant = 0;
+	let value_unit = parseInt(value);
+	let total_value = 0;
+
+	if (discount_id == 0) {
+		document.getElementById('amount-' + id).value = cant;
+		document.getElementById('amount-div' + id).innerHTML = cant;
+		total_value = cant * value_unit;
+	}
+
+	// 50% discout for second
+	if (discount_id == 1) {
+		let cant_calc = cant;
+		if (cant % 2 !== 0) {
+			cant_calc -= 1;
+			total_value = value_unit;
+		}
+
+		total_value += (cant_calc / 2) * value_unit;
+		total_value += (cant_calc / 2) * (value_unit / 2);
+		document.getElementById('amount-' + id).value = cant;
+		document.getElementById('amount-div' + id).innerHTML = cant;
+	}
+
+	// discount 2 x 3
+	if (discount_id == 2) {
+		let cant_calc = cant;
+		if (cant % 2 != 0) {
+			cant_calc -= 1;
+		}
+
+		let new_cant = cant + (cant_calc / 2);
+		total_value = cant * value_unit;
+		document.getElementById('amount-' + id).value = new_cant;
+		document.getElementById('amount-div' + id).innerHTML = new_cant;
+	}
+
+	document.getElementById('total-' + id).innerHTML = total_value;
+	document.getElementById('totalForm-' + id).value = total_value;
+}
+
+function render_basket() {
+	let products = {};
+	let total = 0;
+	if (sessionStorage.basket) {
+		products = JSON.parse(sessionStorage.basket);
+	}
+
+	let html_str = '';
+	html_str += '<table class="table mt-5 mb-5">' +
+				'<thead class="thead-dark">' +
+					'<tr>' +
+					'<th scope="col" class="text-center">Producto</th>' +
+					'<th scope="col" class="text-center">Cantidad</th>' +
+					'<th scope="col" class="text-center">Sub Total</th>' +
+					'</tr>' +
+				'</thead>' +
+				'<tbody>';
+
+	const elements = Object.entries(products)
+
+	for (const [item, obj] of elements) {
+		if (obj.amount != 0) {
+  			html_str += '<tr>' +
+						'<td class="text-center">' + obj.name + '</td>' +
+						'<td class="text-center">' + obj.amount + '</td>' +
+						'<td class="text-center">$ ' + obj.total + '</td>' +
+						'</tr>';
+
+			total += parseInt(obj.total);
+		}
+	}
+
+	html_str += '<tr class="table-secondary">' +
+				'<td colspan="2" class="text-center">Total' + '</td>' +
+				'<td class="text-center">$' + total + '</td>' +
+				'</tr>';
+
+	html_str += '</tbody>' + 
+				'</table>';
+	
+	document.getElementById('basket').innerHTML += html_str;
+
+}
+
+function load_products() {
+	let products = JSON.parse(sessionStorage.basket);
+
+	const elements = Object.entries(products);
+	let final_products = [];
+	let total = {};
+	total.sum = 0;
+
+	for (const [item, obj] of elements) {
+		delete obj.description;
+		delete obj.image_url;
+  		if (obj.amount != 0) {
+			final_products.push(obj);
+			total.sum += parseInt(obj.total);
+		}
+	}
+	final_products.push(total);
+
+	let products_json = JSON.stringify(final_products);
+	document.getElementById('products').value = products_json;
+}
+
+function clear_session() {
+	//sessionStorage.clear();
+	console.log("session clear");
+}
+

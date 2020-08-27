@@ -1,0 +1,59 @@
+{% load static %}
+<!doctype html
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>Leemon Market</title>
+	<!-- Custom styles for this template -->
+    <link href="{% static 'assets/dist/css/starter-template.css' %}" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+	<link href="{% static 'assets/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body {% block onload %} {% endblock %}>
+    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-success">
+  <a class="navbar-brand text-white" href="#">Leemon Market</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link text-white" href="{% url 'leemon:index' %}">Catálogo</a>
+      </li>
+    </ul>
+    <a class="nav-link text-white" href="{% url 'leemon:basket' %}">Carrito</a>
+  </div>
+</nav>
+
+<main role="main" class="container">
+
+  <div class="starter-template">
+    {% block body_block %}{% endblock %}
+  </div>
+
+</main><!-- /.container -->
+<script src="{% static 'assets/dist/js/leemon.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="{% static 'assets/js/vendor/jquery.slim.min.js' %}"><\/script>')</script>
+<script src="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}"></script>
+<footer class="container-fluid">
+  <p>Footer Text</p>
+</footer>
+
+</body>
+</html>

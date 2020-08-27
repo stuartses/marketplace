@@ -1,0 +1,38 @@
+{% extends 'leemon/base.html' %}
+{% load static %}
+
+{% block body_block %}
+
+{% if id and image_list %}
+	<p>Selecciona una imágen personalizada</p>
+	<form action="{% url 'leemon:save_image' %}" method="post">
+	{% csrf_token %}
+	<div class="form-check">
+		<div class="card-columns">
+		{% for image in image_list %}
+			<div class="card bg-light">
+				<img class="card-img-top" src="{% static 'leemon/' %}{{ image.url }}" alt="Card image">
+				<div class="card-body text-center">
+					<input type="radio" 
+						id="{{ image.id }}" 
+						name="image_id" 
+						value="{{ image.id }}"
+						class="form-check-input">
+					<label for="{{ image.id }}" class="form-check-label card-text">{{ image.url }}</label>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+	<div class="m-5">
+		<label for="text_image">Escribe un texto que describa la imágen</label>
+		<input type="text" name="text_image" id="text_image" value="" class="form-control">
+		<input type="hidden" name="id" id="id" value="{{ id }}">
+		<button type="submit" class="btn btn-success m-5">Guardar</button>
+	</div>
+	</form>
+{% else %}
+    <p>No user data was record.</p>
+{% endif %}
+
+{% endblock %}

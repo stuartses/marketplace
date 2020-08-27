@@ -1,0 +1,20 @@
+{% extends 'leemon/base.html' %}
+
+{% block onload %}onload="load_products()"{% endblock %}
+
+{% block body_block %}
+{% if id %}
+	<div class="card">
+		<div class="card-body text-center">
+			<form action="{% url 'leemon:purchase' %}" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="user_id" id="user_id" value="{{ id }}">
+			<input type="hidden" name="products" id="products" value="">
+			<p class="h5 m-5">Todo está listo</p>
+			<button type="submit" class="btn btn-success">Pagar</button>
+			</form>
+		</div>
+	</div>
+{% endif %}
+
+{% endblock %}

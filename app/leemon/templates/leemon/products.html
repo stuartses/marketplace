@@ -1,0 +1,75 @@
+{% extends 'leemon/base.html' %}
+{% load static %}
+
+{% block body_block %}
+
+	{% if product_list %}
+		<div class="card-deck">
+		{% for product in product_list%}
+			<div class="card bg-light">
+				<img class="card-img-top" src="{% static 'leemon/' %}{{ product.image_url }}" alt="Card image">
+				<div class="card-body text-center">
+					<h4 class="card-title">{{ product.name }}</h4>
+						<p class="card-text text-black-50 h3 m-5">$ {{ product.value }}</p>
+						{% if product.id_discount != 0 %}
+							<p class="card-text badge text-wrap bg-warning"><b>Descuento</b></br>
+								{% if product.id_discount == 1 %}
+									El segundo al 50%
+								{% endif %}
+								{% if product.id_discount == 2 %}
+									Pague 2 lleve 3
+								{% endif %}
+							</p>
+						{% endif %}
+						<p class="card-text">{{ product.description }}</p>
+						<div class="form-group">
+								<input class="form-control mt-3 mb-3" type="text" placeholder="Ingrese cantidad..." 
+									id="amount_tmp-{{ product.id }}" 
+									name="amount_tmp-{{ product.id }}"
+									onchange="calc_total({{ product.id }}, {{ product.value }}, {{ product.id_discount }}, this)"
+									onkeyup="calc_total({{ product.id }}, {{ product.value }}, {{ product.id_discount }}, this)">
+								<input type="hidden"
+									id="amount-{{ product.id }}" 
+									name="amount-{{ product.id }}">
+
+								<button class="btn btn-success" type="button" 
+									onclick="add_product('{{ product.id }}', 'add')">
+									Agregar
+								</button>
+								<button class="btn btn-secondary" type="button" 
+									onclick="add_product('{{ product.id }}', 'quit')">
+									Quitar
+								</button>
+						</div>
+						<p>
+							Cantidad: <span id="amount-div{{ product.id }}"></span></br>
+							Total: <span id="total-{{ product.id }}"></span></br>
+							<input type="hidden"
+								id="totalForm-{{ product.id }}" 
+								name="totalForm-{{ product.id }}">
+						</p>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	
+	{% else %}
+		<p>No products are available.</p>
+	{% endif %}
+
+	<script>
+	let products = {};
+
+	if (sessionStorage.basket) {
+			products_obj = JSON.parse(sessionStorage.basket);
+			products_more = {{ product_json|safe }};
+			products = Object.assign(products_obj, products_more);
+		}
+	else {
+		{% if product_json %}
+			products = {{ product_json|safe }};
+		{% endif%}
+	}
+	</script>
+
+{% endblock %}

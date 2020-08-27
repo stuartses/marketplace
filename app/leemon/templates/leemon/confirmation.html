@@ -1,0 +1,46 @@
+{% extends 'leemon/base.html' %}
+{% load static %}
+
+{% block onload %}onload="clear_session()"{% endblock %}
+
+{% block body_block %}
+
+{% if purchase_id %}
+	<h2 class="mb-5">Recibo No: {{ purchase_id }}</h2>
+	<p><b>Nombre:</b> {{ user_name }}</p>
+	<p><b>Documento:</b> {{ user_nit }}</p>
+{% endif %}
+	<h3>Detalle</h3>
+{% if products %}
+	<table class="table mb-5">
+	<thead class="thead-dark">
+		<tr>
+		<th scope="col" class="text-center">Producto</th>
+		<th scope="col" class="text-center">Cantidad</th>
+		<th scope="col" class="text-center">Sub Total</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for element in products %}
+		<tr>
+			<td class="text-center">{{ element.name }}</td>
+			<td class="text-center">{{ element.amount }} </td>
+			<td class="text-center">$ {{ element.total }}</td>
+		</tr>
+		{% endfor %}
+		<tr class="table-secondary">
+			<td colspan="2" class="text-center">Total</td>
+			<td class="text-center">$ {{ total.sum }}</td>
+			</tr>
+	</tbody>
+	</table>
+{% endif %}
+
+<h5>Imagen clave</h5>
+{% if image_url %}
+	<img class="img-thumbnail" src="{% static 'leemon/' %}{{ image_url }}" style="width: 25%"></br>
+	{{ image_text }}
+{% endif %}
+
+{% endblock %}
+

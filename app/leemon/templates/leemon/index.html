@@ -1,0 +1,21 @@
+{% extends 'leemon/base.html' %}
+
+{% block body_block %}
+	<h1>Catálogo de productos</h1>
+	<p class="m-5 text-muted">Seleccione una opción</p>
+
+	{% if category_list %}
+		<div class="card-columns">
+		{% for category in category_list %}
+			<div class="card bg-light">
+				<div class="card-body text-center">
+				  <a href="{% url 'leemon:products' category.id %}"><p class="card-text text-success">{{ category.name }}</p></a>
+				</div>
+	  		</div>
+		{% endfor %}
+		</div>	
+	{% else %}
+		<p>No categories are available.</p>
+	{% endif %}
+
+{% endblock %}
