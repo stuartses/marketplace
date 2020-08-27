@@ -1,0 +1,53 @@
+{% load static %}
+<!doctype html
+<html lang="es">
+<head>
+<title>Recibo de compra {{ purchase_id }}</title>
+<style>
+table, th, td {
+	border: 1px solid black;
+	text-align: center;
+}
+</style>
+<body>
+
+{% if purchase_id %}
+	<h2 style="text-align: center">Recibo No: {{ purchase_id }}</h2>
+	<p><b>Nombre:</b> {{ user_name }}</p>
+	<p><b>Documento:</b> {{ user_nit }}</p>
+{% endif %}
+	<h3 style="text-align: center">Detalle</h3>
+{% if products %}
+	<table style="width: 100%;">
+	<thead>
+		<tr>
+		<th>Producto</th>
+		<th>Cantidad</th>
+		<th>Sub Total</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for element in products %}
+		<tr>
+			<td>{{ element.name }}</td>
+			<td>{{ element.amount }} </td>
+			<td>$ {{ element.total }}</td>
+		</tr>
+		{% endfor %}
+		<tr>
+			<td colspan="2">Total</td>
+			<td>$ {{ total.sum }}</td>
+		</tr>
+	</tbody>
+	</table>
+{% endif %}
+</br>
+<h4>Imagen clave</h4>
+{% if image_url %}
+	<img class="img-thumbnail" src="{% static 'leemon/' %}{{ image_url }}" style="width: 100px;"></br>
+	{{ image_text }}
+{% endif %}
+
+</body>
+</head>
+</html>

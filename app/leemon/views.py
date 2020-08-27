@@ -103,9 +103,9 @@ def purchase(request):
 
         txt_path = save_txt.save(user.__dict__)
 
-        pdf_path = render_pdf.render_to_file('leemon/confirmation.html',
+        pdf_path = render_pdf.render_to_file('leemon/pdf_view.html',
                                              details)
-        # mail.send(user.email, purchase_id, pdf_path[1], txt_path)
+        mail.send(user.email, purchase_id, pdf_path[1], txt_path)
 
     # return HttpResponse(pdf_path)
     return render(request, 'leemon/confirmation.html', details)

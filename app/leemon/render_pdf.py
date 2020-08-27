@@ -20,7 +20,7 @@ def link_callback(uri, rel):
     elif uri.startswith(mUrl):
         # MEDIA_URL default value is "" so everything matches this
         path = os.path.join(mRoot, uri.replace(mUrl, ""))
-    print ("*** {} ****".format(path))
+
     # make sure that file exists
     if not os.path.isfile(path):
         raise Exception('media URI must start with %s or %s' % (sUrl, mUrl))
